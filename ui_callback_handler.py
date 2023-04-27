@@ -1,3 +1,4 @@
+from solution import solve
 from ui import UiMainWindow
 from enums import EquationType, EquationName
 
@@ -15,23 +16,13 @@ class UiCallbackHandler:
         self.update_input()
 
         u = TRpower(sympy.sympify(self.input["u"]))
-        uDerivative = TRpower(sympy.sympify(self.input["uDerivative"]))
-        heterogeneity = TRpower(sympy.sympify(self.input["heterogeneity"])) if self.input["heterogeneity"] is not "" else None
+        u_derivative = TRpower(sympy.sympify(self.input["uDerivative"]))
+        heterogeneity = TRpower(sympy.sympify(self.input["heterogeneity"])) if self.input["heterogeneity"] != "" else None
 
         a = sympy.sympify(self.input["a"])
         l = sympy.sympify(self.input["l"])
 
-        if self.input["name"] is EquationName.Neyman and self.input["type"] is EquationType.Thermal:
-            pass
-
-        elif self.input["name"] is EquationName.Neyman and self.input["type"] is EquationType.Wave:
-            pass
-
-        elif self.input["name"] is EquationName.Dirichle and self.input["type"] is EquationType.Thermal:
-            pass
-
-        elif self.input["name"] is EquationName.Dirichle and self.input["type"] is EquationType.Wave:
-            pass
+        solve(u, u_derivative, heterogeneity, a, l, self.input["name"], self.input["type"])
 
     def update_input(self):
         self.input["u"] = self.ui.uInput.text()
@@ -44,7 +35,7 @@ class UiCallbackHandler:
 
         print("Values updated")
 
-        for key, value in self.input:
+        for key, value in self.input.items():
             print(f"{key} : {value}")
 
 
