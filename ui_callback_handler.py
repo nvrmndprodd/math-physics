@@ -23,7 +23,7 @@ class UiCallbackHandler:
         a = sqrt(sympy.sympify(self.input["a"]))
         l = sympy.sympify(self.input["l"])
 
-        self.ui.log(solve(u, u_derivative, heterogeneity, a, l, self.input["name"], self.input["type"]))
+        self.ui.log(solve(u, u_derivative, heterogeneity, a, l, self.input["name"], self.input["type"], self.ui))
 
     def update_input(self):
         self.input["u"] = self.ui.uInput.text()
@@ -34,10 +34,10 @@ class UiCallbackHandler:
         self.input["name"] = EquationName.Neumann if self.ui.neumannOptionButton.isChecked() else EquationName.Dirichlet
         self.input["type"] = EquationType.Thermal if self.ui.thermalOptionButton.isChecked() else EquationType.Wave
 
-        self.ui.log("Values updated \n")
+        self.ui.log("\nValues updated")
 
         for key, value in self.input.items():
-            self.ui.log(f"{key} : {value} \n")
+            self.ui.log(f"{key} : {value}")
 
 
 

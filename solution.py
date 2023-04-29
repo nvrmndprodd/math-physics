@@ -4,16 +4,16 @@ from enums import EquationName, EquationType
 import thermal_conductivity as thermal
 
 
-def solve(u, u_derivative, heterogeneity, a, l, name, type):
+def solve(u, u_derivative, heterogeneity, a, l, name, type, logger):
     try:
         if name is EquationName.Neumann and type is EquationType.Thermal:
-            pass
+            return f"{thermal.solve_neumann(u, heterogeneity, a, logger)}"
 
         elif name is EquationName.Neumann and type is EquationType.Wave:
             pass
 
         elif name is EquationName.Dirichlet and type is EquationType.Thermal:
-            return thermal.solve_dirichlet(u, heterogeneity, a)
+            return f"{thermal.solve_dirichlet(u, heterogeneity, a, logger)}"
 
         elif name is EquationName.Dirichlet and type is EquationType.Wave:
             pass
