@@ -7,13 +7,13 @@ import thermal_conductivity as thermal
 def solve(u, u_derivative, heterogeneity, a, l, name, type, logger):
     try:
         if name is EquationName.Neumann and type is EquationType.Thermal:
-            return f"{thermal.solve_neumann(u, heterogeneity, a, logger)}"
+            return f"answer: {thermal.solve_neumann(u, heterogeneity, a, logger)}"
 
         elif name is EquationName.Neumann and type is EquationType.Wave:
             pass
 
         elif name is EquationName.Dirichlet and type is EquationType.Thermal:
-            return f"{thermal.solve_dirichlet(u, heterogeneity, a, logger)}"
+            return f"answer: {thermal.solve_dirichlet(u, heterogeneity, a, logger)}"
 
         elif name is EquationName.Dirichlet and type is EquationType.Wave:
             pass

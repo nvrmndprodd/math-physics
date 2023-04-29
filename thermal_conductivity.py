@@ -1,27 +1,28 @@
 import verification
+from ui import UiMainWindow
+from heterogeneity import find_partial_solution
 
 import sympy
 from sympy.core.expr import Expr
 
-from ui import UiMainWindow
 
 
 def solve_dirichlet(expression: Expr, heterogeneity: Expr, a, logger: UiMainWindow):
     x, t = sympy.symbols("x t")
 
-    heterogeneity = sympy.Number(0) if heterogeneity is None else sympy.Number(0)
-    heterogeneity.subs(t, 0)
+    additional = sympy.Number(0) if heterogeneity is None else find_partial_solution(heterogeneity, a)
 
-    expression = expression + heterogeneity
+    expression = expression + additional.subs(t, 0)
 
     if expression.func.is_Mul or expression.func == sympy.sin or expression.func == sympy.cos:
         expression = sympy.Add(0, expression, evaluate=False)
     elif not expression.func.is_Add:
-        raise Exception('Failed to solve linear Combination')
+        raise Exception('Wrong input')
 
     answer = sympy.Number(0)
     i: int = 0
 
+    logger.log(f"expression: {expression}")
     for component in expression.args:
         if component.is_zero:
             continue
@@ -40,7 +41,7 @@ def solve_dirichlet(expression: Expr, heterogeneity: Expr, a, logger: UiMainWind
 def solve_neumann(expression: Expr, heterogeneity: Expr, a, logger: UiMainWindow):
     x, t = sympy.symbols("x t")
 
-    heterogeneity = sympy.Number(0) if heterogeneity is None else sympy.Number(0)
+    heterogeneity = sympy.Number(0) if heterogeneity is None else find_partial_solution(heterogeneity, a)
     heterogeneity.subs(t, 0)
 
     expression = expression + heterogeneity
@@ -48,11 +49,12 @@ def solve_neumann(expression: Expr, heterogeneity: Expr, a, logger: UiMainWindow
     if expression.func.is_Mul or expression.func == sympy.sin or expression.func == sympy.cos:
         expression = sympy.Add(0, expression, evaluate=False)
     elif not expression.func.is_Add:
-        raise Exception('Failed to solve linear Combination')
+        raise Exception('Wrong input')
 
     answer = sympy.Number(0)
     i: int = 0
 
+    logger.log(f"expression: {expression}")
     for component in expression.args:
         if component.is_zero:
             continue

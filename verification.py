@@ -28,3 +28,25 @@ def correct_expression(expression: Expr):
             n *= arg
 
     return coef, n
+
+
+def is_x(expression: Expr) -> bool:
+    for arg in expression.args:
+        if len(arg.args) == 0:
+            if not arg.is_number and arg != sympy.Symbol('x'):
+                return False
+        else:
+            if not is_x(arg):
+                return False
+    return True
+
+
+def is_t(expression: Expr) -> bool:
+    for arg in expression.args:
+        if len(arg.args) == 0:
+            if not arg.is_number and arg != sympy.Symbol('t'):
+                return False
+        else:
+            if not is_t(arg):
+                return False
+    return True
