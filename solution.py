@@ -1,19 +1,21 @@
 from PyQt5.QtWidgets import QMessageBox
 from enums import EquationName, EquationType
 
+import thermal_conductivity as thermal
+
 
 def solve(u, u_derivative, heterogeneity, a, l, name, type):
     try:
-        if name is EquationName.Neyman and type is EquationType.Thermal:
+        if name is EquationName.Neumann and type is EquationType.Thermal:
             pass
 
-        elif name is EquationName.Neyman and type is EquationType.Wave:
+        elif name is EquationName.Neumann and type is EquationType.Wave:
             pass
 
-        elif name is EquationName.Dirichle and type is EquationType.Thermal:
-            pass
+        elif name is EquationName.Dirichlet and type is EquationType.Thermal:
+            return thermal.solve_dirichlet(u, heterogeneity, a)
 
-        elif name is EquationName.Dirichle and type is EquationType.Wave:
+        elif name is EquationName.Dirichlet and type is EquationType.Wave:
             pass
 
     except Exception as e:
@@ -21,8 +23,8 @@ def solve(u, u_derivative, heterogeneity, a, l, name, type):
         exception_window.setWindowTitle("Ошибка")
         exception_window.setText(e.__str__())
         exception_window.setIcon(QMessageBox.Critical)
-        exception_window.setStandardButtons(QMessageBox.Ok | QMessageBox.Retry)
+        exception_window.setStandardButtons(QMessageBox.Ok)
 
-        x = exception_window.exec_()
+        exception_window.exec_()
 
 

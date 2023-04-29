@@ -3,6 +3,7 @@ from ui import UiMainWindow
 from enums import EquationType, EquationName
 
 import sympy
+from sympy import sqrt
 from sympy.simplify.fu import TRpower
 
 
@@ -19,10 +20,10 @@ class UiCallbackHandler:
         u_derivative = TRpower(sympy.sympify(self.input["uDerivative"]))
         heterogeneity = TRpower(sympy.sympify(self.input["heterogeneity"])) if self.input["heterogeneity"] != "" else None
 
-        a = sympy.sympify(self.input["a"])
+        a = sqrt(sympy.sympify(self.input["a"]))
         l = sympy.sympify(self.input["l"])
 
-        solve(u, u_derivative, heterogeneity, a, l, self.input["name"], self.input["type"])
+        self.ui.log(solve(u, u_derivative, heterogeneity, a, l, self.input["name"], self.input["type"]))
 
     def update_input(self):
         self.input["u"] = self.ui.uInput.text()
@@ -30,13 +31,13 @@ class UiCallbackHandler:
         self.input["a"] = self.ui.aInput.text()
         self.input["l"] = self.ui.lInput.text()
         self.input["heterogeneity"] = self.ui.heterogeneityInput.text()
-        self.input["name"] = EquationName.Neyman if self.ui.neymanOptionButton.isChecked() else EquationName.Dirichle
+        self.input["name"] = EquationName.Neumann if self.ui.neumannOptionButton.isChecked() else EquationName.Dirichlet
         self.input["type"] = EquationType.Thermal if self.ui.thermalOptionButton.isChecked() else EquationType.Wave
 
-        print("Values updated")
+        self.ui.log("Values updated \n")
 
         for key, value in self.input.items():
-            print(f"{key} : {value}")
+            self.ui.log(f"{key} : {value} \n")
 
 
 

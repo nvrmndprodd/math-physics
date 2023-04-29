@@ -2,8 +2,8 @@ from enum import Enum
 
 
 class EquationName(Enum):
-    Neyman = 0,
-    Dirichle = 1
+    Neumann = 0,
+    Dirichlet = 1
 
 
 class EquationType(Enum):
