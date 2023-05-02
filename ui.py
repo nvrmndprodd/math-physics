@@ -228,6 +228,7 @@ class UiMainWindow(object):
         self.console.setPalette(palette)
         self.console.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.console.setObjectName("console")
+        self.console.setFontPointSize(12)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslate_ui(MainWindow)
@@ -253,7 +254,7 @@ class UiMainWindow(object):
         self.heterogeneityInput.setText(_translate("MainWindow", "0"))
         self.heterogeneityLabel.setText(_translate("MainWindow", "F(x, t)"))
         self.uDerivativeInput.setText(_translate("MainWindow", "0"))
-        self.uDerivativeLabel.setText(_translate("MainWindow", "du/dx (x, 0)"))
+        self.uDerivativeLabel.setText(_translate("MainWindow", "du/dt (x, 0)"))
         self.calculateButton.setText(_translate("MainWindow", "Вычислить"))
 
     def log(self, message: str) -> None:
